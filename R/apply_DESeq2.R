@@ -17,7 +17,7 @@ run_DESeq2 <- function(L, alpha = 0.05) {
   # DESeq2 analysis
   dds <- DESeq2::DESeqDataSetFromMatrix(
     countData = counts,
-    colData = meta, 
+    colData = meta,
     design = model_matrix
   )
 

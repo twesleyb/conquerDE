@@ -8,24 +8,24 @@
 #' @importFrom edgeR glmFit glmLRT topTags
 
 
-run_edgeRLRT <- function(L, alpha=0.05) {
+run_edgeRLRT <- function(L, alpha = 0.05) {
 
-		# collect inputs
-		counts <- L$counts
-		model_matrix <- L$design
-		contrast <- L$contrast
-		meta <- L$meta
+  # collect inputs
+  counts <- L$counts
+  model_matrix <- L$design
+  contrast <- L$contrast
+  meta <- L$meta
 
-		# edgeR analysis
-		dge <- edgeR::DGEList(counts, samples=meta)
-		dge <- edgeR::calcNormFactors(dge)
-		dge <- edgeR::estimateDisp(dge, design = model_matrix)
-		fit <- edgeR::glmFit(dge, design = model_matrix)
-		lrt <- edgeR::glmLRT(fit, contrast=contrast)
-		tt <- edgeR::topTags(lrt, n = Inf)
+  # edgeR analysis
+  dge <- edgeR::DGEList(counts, samples = meta)
+  dge <- edgeR::calcNormFactors(dge)
+  dge <- edgeR::estimateDisp(dge, design = model_matrix)
+  fit <- edgeR::glmFit(dge, design = model_matrix)
+  lrt <- edgeR::glmLRT(fit, contrast = contrast)
+  tt <- edgeR::topTags(lrt, n = Inf)
 
-		# collect results
-		res <- as.data.frame(tt$table)
-		res$candidate <- res$FDR < alpha
-		return(res)
+  # collect results
+  res <- as.data.frame(tt$table)
+  res$candidate <- res$FDR < alpha
+  return(res)
 }

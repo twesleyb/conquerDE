@@ -6,7 +6,7 @@
 #'
 #' @importFrom glmGamPoi glm_gp test_de
 
-run_glmGamPoi <- function(L, alpha=0.05) {
+run_glmGamPoi <- function(L, alpha = 0.05) {
 
   # collect inputs
   counts <- L$counts
@@ -15,7 +15,7 @@ run_glmGamPoi <- function(L, alpha=0.05) {
   meta <- L$meta
 
   # glmGamPoi analysis
-  fit <- glmGamPoi::glm_gp(counts, design = model_matrix, on_disk=FALSE)
+  fit <- glmGamPoi::glm_gp(counts, design = model_matrix, on_disk = FALSE)
   res <- glmGamPoi::test_de(fit, contrast)
 
   # collect results
