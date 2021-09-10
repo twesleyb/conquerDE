@@ -1,6 +1,6 @@
 #' conquerDE
 #'
-#' run DE analysis
+#' run DE analysis ala \insertRef{Soneson2018}{conquerDE}
 #'
 #' @export conquerDE
 
