@@ -1,0 +1,34 @@
+---
+title: "conquering RNAseq DE analysis"
+author: "twab"
+date: "`r Sys.Date()`"
+bibliography: "~/projects/conquerDE/inst/REFERENCES.bib"
+output:
+  html_document:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{conquerDE}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r knitr-setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, out.width = "100%")
+```
+
+# conquerDE
+
+```{r imports}
+
+library(conquerDE)
+
+```
+
+```{r example}
+
+data(L)
+
+conquerDE(L, method="edgeR")
+
+```
