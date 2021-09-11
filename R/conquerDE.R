@@ -4,7 +4,7 @@
 #'
 #' @export conquerDE
 
-conquerDE <- function(L, method = c("edgeRQLF", "edgeRLRT", "DESeq2", "glmGamPoi", "limma", "limmatrend"), alpha = 0.05) {
+conquerDE <- function(L, method = c("edgeRQLF", "edgeRLRT", "DESeq2", "glmGamPoi", "limma", "limmatrend", "zinger"), alpha = 0.05) {
   method <- match.arg(method)
   switch(method,
     # DESeq2-based methods
@@ -18,6 +18,10 @@ conquerDE <- function(L, method = c("edgeRQLF", "edgeRLRT", "DESeq2", "glmGamPoi
     edgeRLRT = {
       run_edgeRLRT(L, alpha)
     },
+	# zinbwave-based methods
+	zinger = {
+			run_edgeRzinbwave(L, alpha)
+	},
     # glmGamPoi-based methods
     glmGamPoi = {
       run_glmGamPoi(L, alpha)

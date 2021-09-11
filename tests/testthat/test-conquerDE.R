@@ -6,6 +6,7 @@ test_that("multiplication works", {
 # load data for testing
 data(L)
 
+# FIXME: these tests just check if result is data.frame!!
 test_that("method='foo' fails", {
 				  expect_error(conquerDE(L, method="foo"))
 })
@@ -28,4 +29,8 @@ test_that("method='limma' works", {
 
 test_that("method='limmatrend' works", {
 				  expect_s3_class(conquerDE(L, method="limmatrend"), "data.frame")
+})
+
+test_that("method='zinger' works", {
+				  expect_s3_class(conquerDE(L, method="zinger"), "data.frame")
 })

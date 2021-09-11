@@ -6,10 +6,11 @@
 \usage{
 conquerDE(
   L,
-  method = c("edgeRQLF", "edgeRLRT", "DESeq2", "glmGamPoi", "limma", "limmatrend"),
+  method = c("edgeRQLF", "edgeRLRT", "DESeq2", "glmGamPoi", "limma", "limmatrend",
+    "zinger"),
   alpha = 0.05
 )
 }
 \description{
-run DE analysis
+run DE analysis ala \insertRef{Soneson2018}{conquerDE}
 }
