@@ -1,13 +1,14 @@
 ---
-title: "conquering RNAseq DE analysis"
+title: "conquering DE analysis in RNAseq"
 author: "twab"
 date: "`r Sys.Date()`"
-bibliography: "~/projects/conquerDE/inst/REFERENCES.bib"
+package: conquerDE
+bibliography: "../inst/REFERENCES.bib"
 output:
-  html_document:
+  BiocStyle::html_document:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{conquerDE}
+  %\VignetteIndexEntry{conquering DE analysis in RNAseq}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -19,6 +20,21 @@ knitr::opts_chunk$set(echo = TRUE, out.width = "100%")
 
 # conquerDE
 
+## Introduction
+
+@Soneson2018
+@VandenBerge2018
+
+## Installation
+
+```{r installation, eval=FALSE}
+
+devtools::install_github("twesleyb/conquerDE")
+
+```
+
+## Usage Example
+
 ```{r imports}
 
 library(conquerDE)
@@ -29,6 +45,9 @@ library(conquerDE)
 
 data(L)
 
-conquerDE(L, method="edgeR")
+res <- conquerDE(L, method="edgeRQLF")
+head(res)
 
 ```
+
+## Bibliography

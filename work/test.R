@@ -8,8 +8,32 @@ library(data.table)
 
 # load the data
 data(meta)
+data(counts)
+data(contrast)
 data(gene_map)
 data(filt_counts)
+data(model_matrix)
+
+# zinger - zero inflation model ala zinbwave
+L <- list(counts=counts,meta=meta,design=model_matrix,contrast=contrast)
+res <- conquerDE(L, method="zinger")
+
+# candidates = 12,750
+df <- res %>% as.data.table(keep.rownames="ensembl") %>% 
+		left_join(gene_map,by="ensembl") %>% 
+		arrange(padjFilter) %>% 
+		left_join(as.data.table(counts,keep.rownames="ensembl"),by="ensembl")
+
+fwrite(df,"zinger.csv")
+
+# candidates = 18,127
+res <- conquerDE(L, method="edgeRQLF")
+
+df <- res %>% as.data.table(keep.rownames="ensembl") %>% 
+		left_join(gene_map,by="ensembl") %>% 
+		arrange(FDR) %>% 
+		left_join(as.data.table(counts,keep.rownames="ensembl"),by="ensembl")
+
 
 # mean-reference model (intercept term embodies first level of condition, CTRL)
 model_matrix <- model.matrix(~condition,data=meta)

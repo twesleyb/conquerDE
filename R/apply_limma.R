@@ -1,28 +1,39 @@
 #' apply_limma
 #'
-#' run limma DE analysis
+#' run limma DE analysis (trended, robust)
+#'
+#' @param L$counts - normalized counts e.g. log2(cpm+1) or log2(fpkm)
 #'
 #' @export run_limma
 #'
 #' @importFrom edgeR DGEList calcNormFactors cpm
-#' @importFrom limma lmFit contrasts.fit eBayes topTable
+#' @importFrom limma EList lmFit contrasts.fit eBayes topTable
 
-run_limma <- function(L, trend = FALSE, robust = FALSE, alpha = 0.05) {
+run_limma <- function(L, alpha = 0.05) {
+
+  ##library(conquerDE)
+  # root <- "~/projects/conquerDE"
+  # devtools::load_all(root)
+  # data(Satpathy2021_counts) #log2FPKM
+  # data(Satpathy2021_meta)
+  # counts <- Satpathy2021_counts
+  # meta <- Satpathy2021_meta
+  # condition <- sapply(strsplit(colnames(Satpathy2021_counts),"_"),"[",1)
+  # model_matrix <- model.matrix(~ 0 + condition)
+  # contrast <- limma::makeContrasts("conditiontumor-conditionnormal",
+  #   							   levels=model_matrix)
+  # L <- list("meta" = meta, "counts" = counts, "design"=model_matrix, "contrast"=contrast)
+  # trend = TRUE; robust=TRUE; alpha = 0.05
 
   # collect inputs
   meta <- L$meta
-  counts <- L$counts
+  norm_counts <- L$counts
   contrast <- L$contrast
   model_matrix <- L$design
 
-  # perform library and cpm normalization with edgeR
-  dge <- edgeR::DGEList(counts, sample = meta)
-  dge <- edgeR::calcNormFactors(dge)
-  counts_cpm <- edgeR::cpm(dge)
-
   # create EList object and add log(CPM counts)
   y <- new("EList")
-  y$E <- log(counts_cpm + 1)
+  y$E <- norm_counts
 
   # limma workflow
   fit <- limma::lmFit(y, design = model_matrix)
@@ -32,5 +43,6 @@ run_limma <- function(L, trend = FALSE, robust = FALSE, alpha = 0.05) {
 
   # collect results
   tt$candidate <- tt$"adj.P.Val" < alpha
+
   return(tt)
 }
